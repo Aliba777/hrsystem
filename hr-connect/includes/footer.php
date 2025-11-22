@@ -16,6 +16,7 @@
                 <h4>Пайдаланушылар үшін</h4>
                 <a href="jobseeker/browse_vacancies.php">Жұмыс іздеушілер</a>
                 <a href="hr/post_vacancy.php">Жұмыс берушілер</a>
+                <a href="profile.php">Профиль</a>
                 <a href="register.php">Тіркелу</a>
                 <a href="login.php">Кіру</a>
             </div>

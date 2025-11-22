@@ -78,7 +78,7 @@ if ($_SESSION['user_type'] == 'hr') {
                 <i class="fas fa-handshake me-2"></i>HR Connect
             </a>
             <div class="navbar-nav ms-auto">
-                <span class="nav-link"><i class="fas fa-user me-2"></i><?= htmlspecialchars($_SESSION['full_name']) ?></span>
+                <a class="nav-link" href="profile.php"><i class="fas fa-user me-2"></i><?= htmlspecialchars($_SESSION['full_name']) ?></a>
                 <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Выйти</a>
             </div>
         </div>

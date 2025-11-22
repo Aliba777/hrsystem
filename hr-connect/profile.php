@@ -276,9 +276,14 @@ unset($_SESSION['success']);
                     <?php endif; ?>
 
                     <!-- Опыт работы -->
-                    <?php if (!empty($experience)): ?>
                     <div class="profile-card">
-                        <h4><i class="fas fa-briefcase me-2"></i>Жұмыс тәжірибесі</h4>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0"><i class="fas fa-briefcase me-2"></i>Жұмыс тәжірибесі</h4>
+                            <a href="add_experience.php" class="btn btn-sm btn-edit">
+                                <i class="fas fa-plus me-1"></i>Қосу
+                            </a>
+                        </div>
+                        <?php if (!empty($experience)): ?>
                         <?php foreach ($experience as $exp): ?>
                             <div class="timeline-item">
                                 <h5><?= htmlspecialchars($exp['position']) ?></h5>
@@ -295,13 +300,20 @@ unset($_SESSION['success']);
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-muted">Жұмыс тәжірибесі қосылмаған</p>
+                        <?php endif; ?>
                     </div>
-                    <?php endif; ?>
 
                     <!-- Образование -->
-                    <?php if (!empty($education)): ?>
                     <div class="profile-card">
-                        <h4><i class="fas fa-graduation-cap me-2"></i>Білім</h4>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Білім</h4>
+                            <a href="add_education.php" class="btn btn-sm btn-edit">
+                                <i class="fas fa-plus me-1"></i>Қосу
+                            </a>
+                        </div>
+                        <?php if (!empty($education)): ?>
                         <?php foreach ($education as $edu): ?>
                             <div class="timeline-item">
                                 <h5><?= htmlspecialchars($edu['institution']) ?></h5>
@@ -321,8 +333,10 @@ unset($_SESSION['success']);
                                 <?php endif; ?>
                             </div>
                         <?php endforeach; ?>
+                        <?php else: ?>
+                            <p class="text-muted">Білім туралы ақпарат қосылмаған</p>
+                        <?php endif; ?>
                     </div>
-                    <?php endif; ?>
                 <?php else: ?>
                     <!-- Для HR менеджеров -->
                     <div class="profile-card">
