@@ -95,7 +95,7 @@ $languages = $lang_stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -285,7 +285,7 @@ $languages = $lang_stmt->fetchAll();
                     <input type="text" name="skills" class="form-control" 
                            value="<?= htmlspecialchars(implode(', ', $skills)) ?>" 
                            placeholder="PHP, JavaScript, Python, SQL">
-                    <small class="text-muted">Мысалы: PHP, JavaScript, Python, SQL</small>
+                    <small class="text-muted">Мысалы: PHP, JavaScript, Python, SQL, HTML, CSS</small>
                 </div>
             </div>
             <?php endif; ?>

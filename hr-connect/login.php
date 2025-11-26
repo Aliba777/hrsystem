@@ -17,17 +17,17 @@ if ($_POST) {
         header("Location: dashboard.php");
         exit;
     } else {
-        $error = "Неверный email или пароль";
+        $error = "Email немесе құпия сөз қате";
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход - HR Connect</title>
+    <title>Кіру - HR Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -63,8 +63,8 @@ if ($_POST) {
                 <div class="col-md-6 col-lg-5">
                     <div class="login-card">
                         <div class="card-header">
-                            <h2><i class="fas fa-sign-in-alt me-2"></i>Вход в систему</h2>
-                            <p class="mb-0">Добро пожаловать в HR Connect</p>
+                            <h2><i class="fas fa-sign-in-alt me-2"></i>Жүйеге кіру</h2>
+                            <p class="mb-0">HR Connect-ке қош келдіңіз</p>
                         </div>
                         <div class="card-body p-5">
                             <?php if (isset($error)): ?>
@@ -79,25 +79,25 @@ if ($_POST) {
                                     <label class="form-label">Email</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                        <input type="email" name="email" class="form-control" placeholder="example@mail.ru" required>
+                                        <input type="email" name="email" class="form-control" placeholder="example@mail.kz" required>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Пароль</label>
+                                    <label class="form-label">Құпия сөз</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                        <input type="password" name="password" class="form-control" placeholder="Введите пароль" required>
+                                        <input type="password" name="password" class="form-control" placeholder="Құпия сөзді енгізіңіз" required>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100 mb-3">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Войти
+                                    <i class="fas fa-sign-in-alt me-2"></i>Кіру
                                 </button>
                             </form>
                             
                             <div class="text-center">
-                                <p class="mb-0">Нет аккаунта? <a href="register.php" class="text-decoration-none">Зарегистрируйтесь</a></p>
+                                <p class="mb-0">Аккаунт жоқ па? <a href="register.php" class="text-decoration-none">Тіркелу</a></p>
                                 <a href="index.php" class="text-muted text-decoration-none mt-2 d-block">
-                                    <i class="fas fa-home me-1"></i>На главную
+                                    <i class="fas fa-home me-1"></i>Басты бетке
                                 </a>
                             </div>
                         </div>

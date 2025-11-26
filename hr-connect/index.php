@@ -31,9 +31,7 @@ if (isset($_SESSION['user_id'])) {
             
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="#features">Мүмкіндіктер</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="#how-it-works">Қалай жұмыс істейді</a>
                     </li>
@@ -79,53 +77,7 @@ if (isset($_SESSION['user_id'])) {
     </section>
 
     <!-- Преимущества -->
-    <section class="features-section" id="features">
-        <div class="container">
-            <h2 class="section-title">Неге HR Connect таңдайды</h2>
-            
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
-                        <h3 class="feature-title">Лездік жауап</h3>
-                        <p class="feature-text">
-                            Бос орындарға лездік жауап алыңыз. 
-                            HR менеджерлері мен жұмыс іздеушілер арасындағы тікелей байланыс.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3 class="feature-title">Деректер қауіпсіздігі</h3>
-                        <p class="feature-text">
-                            Сіздің деректеріңіз сенімді қорғалған. 
-                            Заманауи шифрлау технологиялары және жеке ақпаратты қорғау.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="feature-title">Ақылды аналитика</h3>
-                        <p class="feature-text">
-                            Жауаптар статистикасын бақылаңыз, 
-                            тиімділікті талдаңыз және сарапталған шешімдер қабылдаңыз.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- Как это работает -->
     <section class="how-it-works" id="how-it-works" style="background: white; padding: 80px 0;">
         <div class="container">
@@ -157,21 +109,7 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </section>
 
-    <!-- CTA секция -->
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Бүгін бастаңыз!</h2>
-            <p class="lead">Мыңдаған компаниялар мен жұмыс іздеушілер бізге сенеді</p>
-            <div class="cta-buttons">
-                <a href="register.php" class="btn btn-light btn-lg">
-                    <i class="fas fa-user-plus me-2"></i>Тіркелу
-                </a>
-                <a href="login.php" class="btn btn-outline-light btn-lg">
-                    <i class="fas fa-sign-in-alt me-2"></i>Кіру
-                </a>
-            </div>
-        </div>
-    </section>
+  
 
     <?php include 'includes/footer.php'; ?>
 

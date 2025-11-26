@@ -37,7 +37,7 @@ unset($_SESSION['success']);
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -164,7 +164,7 @@ unset($_SESSION['success']);
                 </div>
                 <div class="col-md-3 text-end">
                     <a href="edit_profile.php" class="btn btn-light">
-                        <i class="fas fa-edit me-2"></i>Профильді өңдеу
+                        <i class="fas fa-edit me-2"></i>Өңдеу
                     </a>
                 </div>
             </div>
@@ -344,7 +344,7 @@ unset($_SESSION['success']);
                         <?php if ($user['bio']): ?>
                             <p><?= nl2br(htmlspecialchars($user['bio'])) ?></p>
                         <?php else: ?>
-                            <p class="text-muted">Компания туралы ақпарат жоқ</p>
+                            <p class="text-muted">Компания туралы ақпарат қосылмаған</p>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>

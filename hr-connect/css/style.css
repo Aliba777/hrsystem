@@ -409,3 +409,28 @@ a {
         margin-bottom: 1rem;
     }
 }
+
+
+/* Фикс для футера - чтобы он всегда был внизу */
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-wrapper {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+}
+
+/* Убираем лишние отступы у контейнеров перед футером */
+.container:last-of-type {
+    margin-bottom: 0;
+}

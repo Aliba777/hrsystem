@@ -18,11 +18,11 @@ $applications = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои заявки - HR Connect</title>
+    <title>Менің өтінімдерім - HR Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -39,14 +39,14 @@ $applications = $stmt->fetchAll();
                 <i class="fas fa-handshake me-2"></i>HR Connect
             </a>
             <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="browse_vacancies.php"><i class="fas fa-search me-2"></i>Поиск вакансий</a>
-                <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Выйти</a>
+                <a class="nav-link" href="browse_vacancies.php"><i class="fas fa-search me-2"></i>Вакансияларды іздеу</a>
+                <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-2"></i>Шығу</a>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4 mb-5">
-        <h2 class="mb-4"><i class="fas fa-file-alt me-2"></i>Мои заявки</h2>
+        <h2 class="mb-4"><i class="fas fa-file-alt me-2"></i>Менің өтінімдерім</h2>
         
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
@@ -60,7 +60,7 @@ $applications = $stmt->fetchAll();
         
         <?php if (empty($applications)): ?>
             <div class="alert alert-info">
-                У вас пока нет отправленных заявок. <a href="browse_vacancies.php">Найдите вакансии и откликнитесь!</a>
+                Сізде әлі жіберілген өтінімдер жоқ. <a href="browse_vacancies.php">Вакансияларды тауып, өтінім жіберіңіз!</a>
             </div>
         <?php else: ?>
             <div class="row">
@@ -69,18 +69,18 @@ $applications = $stmt->fetchAll();
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($application['vacancy_title']) ?></h5>
-                            <p class="text-success fw-bold">Зарплата: <?= number_format($application['salary'], 0, '', ' ') ?> руб.</p>
-                            <p class="text-muted">Адрес: <?= htmlspecialchars($application['address']) ?></p>
+                            <p class="text-success fw-bold">Жалақы: <?= number_format($application['salary'], 0, '', ' ') ?> ₸</p>
+                            <p class="text-muted">Мекен-жайы: <?= htmlspecialchars($application['address']) ?></p>
                             <p class="text-muted">HR: <?= htmlspecialchars($application['hr_name']) ?></p>
                             
                             <div class="mb-3">
-                                <strong>Сопроводительное письмо:</strong>
+                                <strong>Сүйемелдеу хаты:</strong>
                                 <p><?= nl2br(htmlspecialchars($application['cover_letter'])) ?></p>
                             </div>
                             
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="badge bg-<?= $application['status'] == 'pending' ? 'warning' : ($application['status'] == 'accepted' ? 'success' : 'danger') ?>">
-                                    <?= $application['status'] == 'pending' ? 'На рассмотрении' : ($application['status'] == 'accepted' ? 'Принято' : 'Отклонено') ?>
+                                    <?= $application['status'] == 'pending' ? 'Қарауда' : ($application['status'] == 'accepted' ? 'Қабылданды' : 'Қабылданбады') ?>
                                 </span>
                                 <small class="text-muted">
                                     <?= date('d.m.Y H:i', strtotime($application['applied_at'])) ?>

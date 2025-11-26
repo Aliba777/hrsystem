@@ -29,11 +29,11 @@ if ($_SESSION['user_type'] == 'hr') {
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Дашборд - HR Connect</title>
+    <title>Басты бет - HR Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -79,15 +79,15 @@ if ($_SESSION['user_type'] == 'hr') {
             </a>
             <div class="navbar-nav ms-auto">
                 <a class="nav-link" href="profile.php"><i class="fas fa-user me-2"></i><?= htmlspecialchars($_SESSION['full_name']) ?></a>
-                <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Выйти</a>
+                <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Шығу</a>
             </div>
         </div>
     </nav>
 
     <div class="dashboard-header">
         <div class="container">
-            <h1><i class="fas fa-tachometer-alt me-3"></i>Панель управления</h1>
-            <p class="mb-0">Добро пожаловать, <?= htmlspecialchars($_SESSION['full_name']) ?>!</p>
+            <h1><i class="fas fa-tachometer-alt me-3"></i>Басқару панелі</h1>
+            <p class="mb-0">Қош келдіңіз, <?= htmlspecialchars($_SESSION['full_name']) ?>!</p>
         </div>
     </div>
 
@@ -99,9 +99,9 @@ if ($_SESSION['user_type'] == 'hr') {
                     <div class="stat-card">
                         <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
                         <h3><?= $vacancies_count ?></h3>
-                        <p>Мои вакансии</p>
+                        <p>Менің вакансияларым</p>
                         <a href="hr/my_vacancies.php" class="btn btn-primary">
-                            <i class="fas fa-cog me-2"></i>Управлять
+                            <i class="fas fa-cog me-2"></i>Басқару
                         </a>
                     </div>
                 </div>
@@ -109,9 +109,9 @@ if ($_SESSION['user_type'] == 'hr') {
                     <div class="stat-card">
                         <i class="fas fa-file-alt fa-3x text-success mb-3"></i>
                         <h3><?= $applications_count ?></h3>
-                        <p>Всего откликов</p>
+                        <p>Барлық өтінімдер</p>
                         <a href="hr/my_vacancies.php" class="btn btn-primary">
-                            <i class="fas fa-eye me-2"></i>Просмотреть
+                            <i class="fas fa-eye me-2"></i>Қарау
                         </a>
                     </div>
                 </div>
@@ -119,10 +119,10 @@ if ($_SESSION['user_type'] == 'hr') {
             
             <div class="d-grid gap-3">
                 <a href="hr/post_vacancy.php" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus-circle me-2"></i>Добавить новую вакансию
+                    <i class="fas fa-plus-circle me-2"></i>Жаңа вакансия қосу
                 </a>
                 <a href="hr/my_vacancies.php" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-list me-2"></i>Мои вакансии
+                    <i class="fas fa-list me-2"></i>Менің вакансияларым
                 </a>
             </div>
             
@@ -133,9 +133,9 @@ if ($_SESSION['user_type'] == 'hr') {
                     <div class="stat-card">
                         <i class="fas fa-paper-plane fa-3x text-primary mb-3"></i>
                         <h3><?= $my_applications_count ?></h3>
-                        <p>Мои заявки</p>
+                        <p>Менің өтінімдерім</p>
                         <a href="jobseeker/my_applications.php" class="btn btn-primary">
-                            <i class="fas fa-eye me-2"></i>Просмотреть
+                            <i class="fas fa-eye me-2"></i>Қарау
                         </a>
                     </div>
                 </div>
@@ -143,9 +143,9 @@ if ($_SESSION['user_type'] == 'hr') {
                     <div class="stat-card">
                         <i class="fas fa-search fa-3x text-success mb-3"></i>
                         <h3><?= $total_vacancies ?></h3>
-                        <p>Доступных вакансий</p>
+                        <p>Қолжетімді вакансиялар</p>
                         <a href="jobseeker/browse_vacancies.php" class="btn btn-primary">
-                            <i class="fas fa-search me-2"></i>Найти работу
+                            <i class="fas fa-search me-2"></i>Жұмыс табу
                         </a>
                     </div>
                 </div>
@@ -153,10 +153,10 @@ if ($_SESSION['user_type'] == 'hr') {
             
             <div class="d-grid gap-3">
                 <a href="jobseeker/browse_vacancies.php" class="btn btn-primary btn-lg">
-                    <i class="fas fa-search me-2"></i>Найти вакансии
+                    <i class="fas fa-search me-2"></i>Вакансияларды іздеу
                 </a>
                 <a href="jobseeker/my_applications.php" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-file-alt me-2"></i>Мои заявки
+                    <i class="fas fa-file-alt me-2"></i>Менің өтінімдерім
                 </a>
             </div>
         <?php endif; ?>
