@@ -74,6 +74,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
+        // Обновляем социальные сети
+        if (isset($_POST['social_types']) && is_array($_POST['social_types'])) {
+            $pdo->prepare("DELETE FROM user_other_contacts WHERE user_id = ?")->execute([$_SESSION['user_id']]);
+            
+            $social_stmt = $pdo->prepare("INSERT INTO user_other_contacts (user_id, contact_type, contact_url, contact_description) VALUES (?, ?, ?, ?)");
+            foreach ($_POST['social_types'] as $index => $type) {
+                if (!empty($_POST['social_urls'][$index])) {
+                    $social_stmt->execute([
+                        $_SESSION['user_id'],
+                        $type,
+                        $_POST['social_urls'][$index],
+                        $_POST['social_descriptions'][$index] ?? ''
+                    ]);
+                }
+            }
+        }
+
         $_SESSION['success'] = 'Профиль сәтті жаңартылды!';
         header("Location: profile.php");
         exit;
@@ -92,6 +109,11 @@ $skills = $skills_stmt->fetchAll(PDO::FETCH_COLUMN);
 $lang_stmt = $pdo->prepare("SELECT * FROM user_languages WHERE user_id = ?");
 $lang_stmt->execute([$_SESSION['user_id']]);
 $languages = $lang_stmt->fetchAll();
+
+// Получаем другие контакты (социальные сети)
+$contacts_stmt = $pdo->prepare("SELECT * FROM user_other_contacts WHERE user_id = ?");
+$contacts_stmt->execute([$_SESSION['user_id']]);
+$other_contacts = $contacts_stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -127,10 +149,20 @@ $languages = $lang_stmt->fetchAll();
             border-bottom: 2px solid #667eea;
             padding-bottom: 10px;
         }
-        .language-row {
+        .language-row, .social-network-row {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
+            align-items: center;
+        }
+        .social-network-row select {
+            flex: 0 0 150px;
+        }
+        .social-network-row input[type="url"] {
+            flex: 2;
+        }
+        .social-network-row input[type="text"] {
+            flex: 1;
         }
         .btn-add-language {
             background: #28a745;
@@ -140,12 +172,19 @@ $languages = $lang_stmt->fetchAll();
             border-radius: 20px;
             margin-top: 10px;
         }
+        .btn-add-language:hover {
+            background: #218838;
+        }
         .btn-remove {
             background: #dc3545;
             color: white;
             border: none;
             padding: 5px 15px;
             border-radius: 15px;
+            flex-shrink: 0;
+        }
+        .btn-remove:hover {
+            background: #c82333;
         }
     </style>
 </head>
@@ -276,6 +315,63 @@ $languages = $lang_stmt->fetchAll();
                 </div>
             </div>
 
+            <!-- Дополнительные социальные сети -->
+            <div class="edit-card">
+                <h4><i class="fas fa-share-alt me-2"></i>Қосымша әлеуметтік желілер</h4>
+                <p class="text-muted mb-3">GitHub, Behance, Dribbble, VK, Facebook, YouTube және т.б.</p>
+                
+                <div id="socialNetworksContainer">
+                    <?php if (empty($other_contacts)): ?>
+                        <div class="social-network-row">
+                            <select name="social_types[]" class="form-control">
+                                <option value="github">GitHub</option>
+                                <option value="behance">Behance</option>
+                                <option value="dribbble">Dribbble</option>
+                                <option value="vk">VK</option>
+                                <option value="linkedin">LinkedIn</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="twitter">Twitter</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="website" selected>Басқа сайт</option>
+                            </select>
+                            <input type="url" name="social_urls[]" class="form-control" placeholder="https://example.com">
+                            <input type="text" name="social_descriptions[]" class="form-control" placeholder="Сипаттама">
+                            <button type="button" class="btn btn-remove" onclick="removeSocialNetwork(this)">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    <?php else: ?>
+                        <?php foreach ($other_contacts as $contact): ?>
+                            <div class="social-network-row">
+                                <select name="social_types[]" class="form-control">
+                                    <option value="github" <?= $contact['contact_type'] == 'github' ? 'selected' : '' ?>>GitHub</option>
+                                    <option value="behance" <?= $contact['contact_type'] == 'behance' ? 'selected' : '' ?>>Behance</option>
+                                    <option value="dribbble" <?= $contact['contact_type'] == 'dribbble' ? 'selected' : '' ?>>Dribbble</option>
+                                    <option value="vk" <?= $contact['contact_type'] == 'vk' ? 'selected' : '' ?>>VK</option>
+                                    <option value="linkedin" <?= $contact['contact_type'] == 'linkedin' ? 'selected' : '' ?>>LinkedIn</option>
+                                    <option value="facebook" <?= $contact['contact_type'] == 'facebook' ? 'selected' : '' ?>>Facebook</option>
+                                    <option value="twitter" <?= $contact['contact_type'] == 'twitter' ? 'selected' : '' ?>>Twitter</option>
+                                    <option value="youtube" <?= $contact['contact_type'] == 'youtube' ? 'selected' : '' ?>>YouTube</option>
+                                    <option value="instagram" <?= $contact['contact_type'] == 'instagram' ? 'selected' : '' ?>>Instagram</option>
+                                    <option value="website" <?= $contact['contact_type'] == 'website' ? 'selected' : '' ?>>Басқа сайт</option>
+                                </select>
+                                <input type="url" name="social_urls[]" class="form-control" 
+                                       value="<?= htmlspecialchars($contact['contact_url']) ?>" placeholder="https://example.com">
+                                <input type="text" name="social_descriptions[]" class="form-control" 
+                                       value="<?= htmlspecialchars($contact['contact_description']) ?>" placeholder="Сипаттама">
+                                <button type="button" class="btn btn-remove" onclick="removeSocialNetwork(this)">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <button type="button" class="btn btn-add-language" onclick="addSocialNetwork()">
+                    <i class="fas fa-plus me-2"></i>Әлеуметтік желі қосу
+                </button>
+            </div>
+
             <?php if ($_SESSION['user_type'] == 'job_seeker'): ?>
             <!-- Навыки -->
             <div class="edit-card">
@@ -365,6 +461,36 @@ $languages = $lang_stmt->fetchAll();
         }
 
         function removeLanguage(button) {
+            button.parentElement.remove();
+        }
+
+        function addSocialNetwork() {
+            const container = document.getElementById('socialNetworksContainer');
+            const row = document.createElement('div');
+            row.className = 'social-network-row';
+            row.innerHTML = `
+                <select name="social_types[]" class="form-control">
+                    <option value="github">GitHub</option>
+                    <option value="behance">Behance</option>
+                    <option value="dribbble">Dribbble</option>
+                    <option value="vk">VK</option>
+                    <option value="linkedin">LinkedIn</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="twitter">Twitter</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="website" selected>Басқа сайт</option>
+                </select>
+                <input type="url" name="social_urls[]" class="form-control" placeholder="https://example.com">
+                <input type="text" name="social_descriptions[]" class="form-control" placeholder="Сипаттама">
+                <button type="button" class="btn btn-remove" onclick="removeSocialNetwork(this)">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(row);
+        }
+
+        function removeSocialNetwork(button) {
             button.parentElement.remove();
         }
     </script>

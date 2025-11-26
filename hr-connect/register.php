@@ -40,13 +40,14 @@ if ($_POST) {
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Регистрация - HR Connect</title>
+    <title>Тіркелу - HR Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <style>
         :root {
             --primary: #4361ee;
@@ -59,15 +60,13 @@ if ($_POST) {
 
         body {
             background: var(--gradient);
-            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .register-container {
-            min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 20px 0;
+            padding: 40px 0;
         }
 
         .register-card {

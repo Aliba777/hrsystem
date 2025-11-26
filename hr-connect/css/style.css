@@ -428,9 +428,22 @@ body {
 
 footer {
     flex-shrink: 0;
+    margin-top: auto;
 }
 
 /* Убираем лишние отступы у контейнеров перед футером */
 .container:last-of-type {
     margin-bottom: 0;
+}
+
+/* Фикс для страниц с полноэкранными контейнерами */
+.register-container,
+.login-container,
+.vacancy-container {
+    flex: 1;
+}
+
+/* Убираем min-height: 100vh из inline стилей */
+body[style*="min-height: 100vh"] {
+    min-height: 100% !important;
 }

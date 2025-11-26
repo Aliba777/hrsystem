@@ -38,6 +38,7 @@ if ($_POST) {
     <title>Вакансия қосу - HR Connect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
     <style>
         :root {
             --primary: #4361ee;
@@ -50,7 +51,6 @@ if ($_POST) {
 
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
@@ -68,7 +68,6 @@ if ($_POST) {
         }
 
         .vacancy-container {
-            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             padding: 40px 0;

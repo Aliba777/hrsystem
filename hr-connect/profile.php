@@ -32,6 +32,11 @@ $lang_stmt = $pdo->prepare("SELECT * FROM user_languages WHERE user_id = ?");
 $lang_stmt->execute([$_SESSION['user_id']]);
 $languages = $lang_stmt->fetchAll();
 
+// Получаем другие контакты (социальные сети)
+$contacts_stmt = $pdo->prepare("SELECT * FROM user_other_contacts WHERE user_id = ?");
+$contacts_stmt->execute([$_SESSION['user_id']]);
+$other_contacts = $contacts_stmt->fetchAll();
+
 $success = $_SESSION['success'] ?? '';
 unset($_SESSION['success']);
 ?>
@@ -154,17 +159,17 @@ unset($_SESSION['success']);
                 </div>
                 <div class="col-md-6">
                     <h2><?= htmlspecialchars($user['full_name']) ?></h2>
-                    <p class="mb-2"><i class="fas fa-envelope me-2"></i><?= htmlspecialchars($user['email']) ?></p>
+                    <p class="mb-2"> <?= htmlspecialchars($user['email']) ?></p>
                     <?php if ($user['phone']): ?>
-                        <p class="mb-2"><i class="fas fa-phone me-2"></i><?= htmlspecialchars($user['phone']) ?></p>
+                        <p class="mb-2"> <?= htmlspecialchars($user['phone']) ?></p>
                     <?php endif; ?>
                     <span class="badge bg-light text-dark">
-                        <?= $user['user_type'] == 'job_seeker' ? 'Жұмыс іздеуші' : 'HR менеджер' ?>
+                        <?= $user['user_type'] == 'job_seeker' ? ' Жұмыс іздеуші' : ' HR менеджер' ?>
                     </span>
                 </div>
                 <div class="col-md-3 text-end">
                     <a href="edit_profile.php" class="btn btn-light">
-                        <i class="fas fa-edit me-2"></i>Өңдеу
+                         Өңдеу
                     </a>
                 </div>
             </div>
@@ -183,32 +188,32 @@ unset($_SESSION['success']);
             <div class="col-md-4">
                 <!-- Основная информация -->
                 <div class="profile-card">
-                    <h4><i class="fas fa-user me-2"></i>Жеке ақпарат</h4>
+                    <h4> Жеке ақпарат</h4>
                     
                     <?php if ($user['bio']): ?>
                         <div class="info-item">
-                            <i class="fas fa-quote-left"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <span><?= nl2br(htmlspecialchars($user['bio'])) ?></span>
                         </div>
                     <?php endif; ?>
                     
                     <?php if ($user['birth_date']): ?>
                         <div class="info-item">
-                            <i class="fas fa-birthday-cake"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <span><?= date('d.m.Y', strtotime($user['birth_date'])) ?></span>
                         </div>
                     <?php endif; ?>
                     
                     <?php if ($user['city']): ?>
                         <div class="info-item">
-                            <i class="fas fa-map-marker-alt"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <span><?= htmlspecialchars($user['city']) ?></span>
                         </div>
                     <?php endif; ?>
                     
                     <?php if ($user['website']): ?>
                         <div class="info-item">
-                            <i class="fas fa-globe"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <a href="<?= htmlspecialchars($user['website']) ?>" target="_blank">Веб-сайт</a>
                         </div>
                     <?php endif; ?>
@@ -216,41 +221,81 @@ unset($_SESSION['success']);
 
                 <!-- Контакты -->
                 <div class="profile-card">
-                    <h4><i class="fas fa-address-book me-2"></i>Байланыс</h4>
+                    <h4> Байланыс</h4>
                     
                     <?php if ($user['linkedin']): ?>
                         <div class="info-item">
-                            <i class="fab fa-linkedin"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <a href="<?= htmlspecialchars($user['linkedin']) ?>" target="_blank">LinkedIn</a>
                         </div>
                     <?php endif; ?>
                     
                     <?php if ($user['telegram']): ?>
                         <div class="info-item">
-                            <i class="fab fa-telegram"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <span><?= htmlspecialchars($user['telegram']) ?></span>
                         </div>
                     <?php endif; ?>
                     
                     <?php if ($user['whatsapp']): ?>
                         <div class="info-item">
-                            <i class="fab fa-whatsapp"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <span><?= htmlspecialchars($user['whatsapp']) ?></span>
                         </div>
                     <?php endif; ?>
                 </div>
 
+                <!-- Дополнительные социальные сети -->
+                <?php if (!empty($other_contacts)): ?>
+                <div class="profile-card">
+                    <h4> Әлеуметтік желілер</h4>
+                    <?php foreach ($other_contacts as $contact): ?>
+                        <div class="info-item">
+                            <?php
+                            // Эмодзи для разных типов
+                            $emojis = [
+                                'github' => '',
+                                'behance' => 'fab fa-behance',
+                                'dribbble' => '',
+                                'vk' => '',
+                                'linkedin' => '',
+                                'facebook' => '',
+                                'twitter' => '',
+                                'youtube' => '',
+                                'instagram' => '',
+                                'website' => '',
+                                'custom' => ''
+                            ];
+                            $emoji = $emojis[$contact['contact_type']] ?? '';
+                            ?>
+                            <span style="font-size: 1.5rem; width: 30px;"><?= $emoji ?></span>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <a href="<?= htmlspecialchars($contact['contact_url']) ?>" target="_blank">
+                                    <?= htmlspecialchars($contact['contact_description']) ?>
+                                </a>
+                                <small class="text-muted" style="word-break: break-all;"><?= htmlspecialchars($contact['contact_url']) ?></small>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+
                 <!-- Языки -->
                 <?php if (!empty($languages)): ?>
                 <div class="profile-card">
-                    <h4><i class="fas fa-language me-2"></i>Тілдер</h4>
+                    <h4> Тілдер</h4>
                     <?php foreach ($languages as $lang): ?>
                         <div class="info-item">
-                            <i class="fas fa-check-circle"></i>
+                            <span style="font-size: 1.5rem; width: 30px;"></span>
                             <span><?= htmlspecialchars($lang['language']) ?> - 
                                 <?php
-                                $levels = ['basic' => 'Базалық', 'intermediate' => 'Орташа', 'advanced' => 'Жоғары', 'native' => 'Ана тілі'];
-                                echo $levels[$lang['proficiency']];
+                                $levels = [
+                                    'A1' => 'A1', 'A2' => 'A2', 'B1' => 'B1', 'B2' => 'B2', 
+                                    'C1' => 'C1', 'C2' => 'C2', 'Родной' => 'Ана тілі',
+                                    'basic' => 'Базалық', 'intermediate' => 'Орташа', 
+                                    'advanced' => 'Жоғары', 'native' => 'Ана тілі'
+                                ];
+                                echo $levels[$lang['proficiency']] ?? $lang['proficiency'];
                                 ?>
                             </span>
                         </div>
@@ -264,7 +309,7 @@ unset($_SESSION['success']);
                     <!-- Навыки -->
                     <?php if (!empty($skills)): ?>
                     <div class="profile-card">
-                        <h4><i class="fas fa-star me-2"></i>Дағдылар</h4>
+                        <h4> Дағдылар</h4>
                         <div>
                             <?php foreach ($skills as $skill): ?>
                                 <span class="skill-badge">
@@ -278,9 +323,9 @@ unset($_SESSION['success']);
                     <!-- Опыт работы -->
                     <div class="profile-card">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="mb-0"><i class="fas fa-briefcase me-2"></i>Жұмыс тәжірибесі</h4>
+                            <h4 class="mb-0"> Жұмыс тәжірибесі</h4>
                             <a href="add_experience.php" class="btn btn-sm btn-edit">
-                                <i class="fas fa-plus me-1"></i>Қосу
+                                 Қосу
                             </a>
                         </div>
                         <?php if (!empty($experience)): ?>
@@ -291,8 +336,7 @@ unset($_SESSION['success']);
                                     <strong><?= htmlspecialchars($exp['company']) ?></strong>
                                 </p>
                                 <p class="text-muted mb-2">
-                                    <i class="fas fa-calendar me-2"></i>
-                                    <?= date('m.Y', strtotime($exp['start_date'])) ?> - 
+                                     <?= date('m.Y', strtotime($exp['start_date'])) ?> - 
                                     <?= $exp['is_current'] ? 'Қазіргі уақыт' : date('m.Y', strtotime($exp['end_date'])) ?>
                                 </p>
                                 <?php if ($exp['description']): ?>
@@ -308,9 +352,9 @@ unset($_SESSION['success']);
                     <!-- Образование -->
                     <div class="profile-card">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>Білім</h4>
+                            <h4 class="mb-0"> Білім</h4>
                             <a href="add_education.php" class="btn btn-sm btn-edit">
-                                <i class="fas fa-plus me-1"></i>Қосу
+                                 Қосу
                             </a>
                         </div>
                         <?php if (!empty($education)): ?>
@@ -324,8 +368,7 @@ unset($_SESSION['success']);
                                     <?php endif; ?>
                                 </p>
                                 <p class="text-muted mb-2">
-                                    <i class="fas fa-calendar me-2"></i>
-                                    <?= date('Y', strtotime($edu['start_date'])) ?> - 
+                                     <?= date('Y', strtotime($edu['start_date'])) ?> - 
                                     <?= date('Y', strtotime($edu['end_date'])) ?>
                                 </p>
                                 <?php if ($edu['description']): ?>
