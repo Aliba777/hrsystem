@@ -59,10 +59,16 @@ $vacancies = $stmt->fetchAll();
                             <p class="text-muted">Мекен-жайы: <?= htmlspecialchars($vacancy['address']) ?></p>
                             <p class="text-muted small">Жарияланды: <?= date('d.m.Y', strtotime($vacancy['created_at'])) ?></p>
                             
-                            <div class="mt-3">
+                            <div class="mt-3 d-flex gap-2 flex-wrap">
                                 <a href="applications.php?vacancy_id=<?= $vacancy['id'] ?>" class="btn btn-primary btn-sm">
-                                    Өтінімдерді қарау
+                                    <i class="fas fa-users me-1"></i>Өтінімдер
                                 </a>
+                                <a href="edit_vacancy.php?id=<?= $vacancy['id'] ?>" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit me-1"></i>Өңдеу
+                                </a>
+                                <button onclick="deleteVacancy(<?= $vacancy['id'] ?>)" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash me-1"></i>Жою
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -75,5 +81,31 @@ $vacancies = $stmt->fetchAll();
     <?php include '../includes/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function deleteVacancy(vacancyId) {
+            if (confirm('Бұл вакансияны жойғыңыз келетініне сенімдісіз бе?')) {
+                fetch('ajax/delete_vacancy.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'vacancy_id=' + vacancyId
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('Қате: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Қате орын алды!');
+                });
+            }
+        }
+    </script>
 </body>
 </html>

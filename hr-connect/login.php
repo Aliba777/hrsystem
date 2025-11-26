@@ -14,7 +14,13 @@ if ($_POST) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_type'] = $user['user_type'];
         $_SESSION['full_name'] = $user['full_name'];
-        header("Location: dashboard.php");
+        
+        // Редирект в зависимости от типа пользователя
+        if ($user['user_type'] == 'admin') {
+            header("Location: admin/dashboard.php");
+        } else {
+            header("Location: dashboard.php");
+        }
         exit;
     } else {
         $error = "Email немесе құпия сөз қате";
