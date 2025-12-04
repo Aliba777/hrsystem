@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="mb-3">
                             <label class="form-label">Жалақы (₸) *</label>
                             <input type="number" name="salary" class="form-control" 
-                                   value="<?= $vacancy['salary'] ?>" required>
+                                   value="<?= $vacancy['salary'] ?>" min="0" required>
                         </div>
                         
                         <div class="mb-3">

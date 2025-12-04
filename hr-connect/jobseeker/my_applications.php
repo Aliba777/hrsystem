@@ -49,7 +49,7 @@ $applications = $stmt->fetchAll();
         <h2 class="mb-4"><i class="fas fa-file-alt me-2"></i>Менің өтінімдерім</h2>
         
         <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success"><?= $_SESSION['success'] ?></div>
+            <div class="alert alert-primary"><?= $_SESSION['success'] ?></div>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
         
@@ -59,7 +59,7 @@ $applications = $stmt->fetchAll();
         <?php endif; ?>
         
         <?php if (empty($applications)): ?>
-            <div class="alert alert-info">
+            <div class="alert alert-primary">
                 Сізде әлі жіберілген өтінімдер жоқ. <a href="browse_vacancies.php">Вакансияларды тауып, өтінім жіберіңіз!</a>
             </div>
         <?php else: ?>
@@ -69,7 +69,7 @@ $applications = $stmt->fetchAll();
                     <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($application['vacancy_title']) ?></h5>
-                            <p class="text-success fw-bold">Жалақы: <?= number_format($application['salary'], 0, '', ' ') ?> ₸</p>
+                            <p class="text-primary fw-bold">Жалақы: <?= number_format($application['salary'], 0, '', ' ') ?> ₸</p>
                             <p class="text-muted">Мекен-жайы: <?= htmlspecialchars($application['address']) ?></p>
                             <p class="text-muted">HR: <?= htmlspecialchars($application['hr_name']) ?></p>
                             
@@ -79,7 +79,7 @@ $applications = $stmt->fetchAll();
                             </div>
                             
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-<?= $application['status'] == 'pending' ? 'warning' : ($application['status'] == 'accepted' ? 'success' : 'danger') ?>">
+                                <span class="badge bg-<?= $application['status'] == 'pending' ? 'primary' : ($application['status'] == 'accepted' ? 'primary' : 'secondary') ?>">
                                     <?= $application['status'] == 'pending' ? 'Қарауда' : ($application['status'] == 'accepted' ? 'Қабылданды' : 'Қабылданбады') ?>
                                 </span>
                                 <small class="text-muted">

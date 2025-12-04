@@ -1,9 +1,7 @@
 <?php
-// Определяем базовый путь в зависимости от текущей директории
 $current_dir = dirname($_SERVER['PHP_SELF']);
 $base_path = '';
 
-// Если мы в подпапке (hr, jobseeker), добавляем ../
 if (strpos($current_dir, '/hr') !== false || strpos($current_dir, '/jobseeker') !== false) {
     $base_path = '../';
 }

@@ -40,106 +40,14 @@ if ($_POST) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --success: #4cc9f0;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
         body {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        .navbar {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .vacancy-container {
-            display: flex;
-            align-items: center;
-            padding: 40px 0;
-        }
-
-        .vacancy-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .card-header {
-            background: var(--gradient);
-            color: white;
+        .form-card {
+            background: white;
+            border-radius: 15px;
             padding: 30px;
-            border-bottom: none;
-            text-align: center;
-        }
-
-        .card-header h2 {
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .card-header p {
-            margin: 10px 0 0 0;
-            opacity: 0.9;
-        }
-
-        .card-body {
-            padding: 40px;
-        }
-
-        .form-control {
-            border-radius: 12px;
-            border: 2px solid #e9ecef;
-            padding: 15px 20px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
-            transform: translateY(-2px);
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .input-group-text {
-            background: var(--primary);
-            border: none;
-            color: white;
-            border-radius: 12px 0 0 12px;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            border: none;
-            border-radius: 12px;
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            width: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
         .btn-primary:hover {
@@ -169,56 +77,10 @@ if ($_POST) {
             color: #666;
         }
 
-        .character-count {
-            text-align: right;
-            font-size: 12px;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .salary-preview {
-            background: linear-gradient(135deg, #4cc9f0, #4361ee);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .salary-preview h5 {
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .alert-success {
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-        }
-
-        .alert-danger {
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, #dc3545, #e83e8c);
-            color: white;
-        }
     </style>
 </head>
 <body>
-    <!-- Навигация -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="../dashboard.php">
-                <i class="fas fa-handshake me-2"></i>HR Connect
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="my_vacancies.php"><i class="fas fa-list me-1"></i>Менің вакансияларым</a>
-                <a class="nav-link" href="../dashboard.php"><i class="fas fa-home me-1"></i>Басты бет</a>
-                <a class="nav-link" href="../logout.php"><i class="fas fa-sign-out-alt me-1"></i>Шығу</a>
-            </div>
-        </div>
-    </nav>
+    <?php include '../includes/navbar.php'; ?>
 
     <div class="vacancy-container">
         <div class="container">
@@ -276,7 +138,7 @@ if ($_POST) {
                                                     <div class="input-group">
                                                         <span class="input-group-text"><i class="fas fa-money-bill-wave"></i></span>
                                                         <input type="number" name="salary" class="form-control" 
-                                                               placeholder="500000" 
+                                                               placeholder="500000" min="0"
                                                                value="<?= htmlspecialchars($_POST['salary'] ?? '') ?>" 
                                                                oninput="updateSalaryPreview(this.value)"
                                                                required>

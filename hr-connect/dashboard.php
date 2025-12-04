@@ -18,6 +18,15 @@ if ($_SESSION['user_type'] == 'hr') {
                                        WHERE v.hr_id = ?");
     $applications_stmt->execute([$_SESSION['user_id']]);
     $applications_count = $applications_stmt->fetchColumn();
+    
+    // Количество отправленных офферов
+    $offers_stmt = $pdo->prepare("SELECT COUNT(*) FROM offers WHERE hr_id = ?");
+    $offers_stmt->execute([$_SESSION['user_id']]);
+    $offers_count = $offers_stmt->fetchColumn();
+    
+    // Количество активных резюме
+    $resumes_stmt = $pdo->query("SELECT COUNT(*) FROM resumes WHERE status = 'active'");
+    $total_resumes = $resumes_stmt->fetchColumn();
 } else {
     $applications_stmt = $pdo->prepare("SELECT COUNT(*) FROM applications WHERE job_seeker_id = ?");
     $applications_stmt->execute([$_SESSION['user_id']]);
@@ -25,6 +34,16 @@ if ($_SESSION['user_type'] == 'hr') {
     
     $vacancies_stmt = $pdo->query("SELECT COUNT(*) FROM vacancies");
     $total_vacancies = $vacancies_stmt->fetchColumn();
+    
+    // Количество резюме пользователя
+    $resumes_stmt = $pdo->prepare("SELECT COUNT(*) FROM resumes WHERE job_seeker_id = ?");
+    $resumes_stmt->execute([$_SESSION['user_id']]);
+    $my_resumes_count = $resumes_stmt->fetchColumn();
+    
+    // Количество полученных офферов
+    $offers_stmt = $pdo->prepare("SELECT COUNT(*) FROM offers WHERE job_seeker_id = ?");
+    $offers_stmt->execute([$_SESSION['user_id']]);
+    $my_offers_count = $offers_stmt->fetchColumn();
 }
 ?>
 
@@ -72,17 +91,7 @@ if ($_SESSION['user_type'] == 'hr') {
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container">
-            <a class="navbar-brand" href="dashboard.php">
-                <i class="fas fa-handshake me-2"></i>HR Connect
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="profile.php"><i class="fas fa-user me-2"></i><?= htmlspecialchars($_SESSION['full_name']) ?></a>
-                <a class="nav-link" href="logout.php"><i class="fas fa-sign-out-alt me-2"></i>Шығу</a>
-            </div>
-        </div>
-    </nav>
+    <?php include 'includes/navbar.php'; ?>
 
     <div class="dashboard-header">
         <div class="container">
@@ -95,69 +104,137 @@ if ($_SESSION['user_type'] == 'hr') {
         <?php if ($_SESSION['user_type'] == 'hr'): ?>
             <!-- HR Dashboard -->
             <div class="row mb-4 g-4">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="stat-card">
                         <i class="fas fa-briefcase fa-3x text-primary mb-3"></i>
                         <h3><?= $vacancies_count ?></h3>
                         <p>Менің вакансияларым</p>
-                        <a href="hr/my_vacancies.php" class="btn btn-primary">
+                        <a href="hr/my_vacancies.php" class="btn btn-primary btn-sm">
                             <i class="fas fa-cog me-2"></i>Басқару
                         </a>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="stat-card">
-                        <i class="fas fa-file-alt fa-3x text-success mb-3"></i>
+                        <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
                         <h3><?= $applications_count ?></h3>
-                        <p>Барлық өтінімдер</p>
-                        <a href="hr/my_vacancies.php" class="btn btn-primary">
+                        <p>Өтінімдер</p>
+                        <a href="hr/my_vacancies.php" class="btn btn-primary btn-sm">
                             <i class="fas fa-eye me-2"></i>Қарау
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h3><?= $total_resumes ?></h3>
+                        <p>Резюмелер</p>
+                        <a href="resumes.php" class="btn btn-primary btn-sm">
+                            <i class="fas fa-search me-2"></i>Қарау
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-paper-plane fa-3x text-primary mb-3"></i>
+                        <h3><?= $offers_count ?></h3>
+                        <p>Менің офферлерім</p>
+                        <a href="hr/my_offers.php" class="btn btn-primary btn-sm">
+                            <i class="fas fa-envelope me-2"></i>Қарау
                         </a>
                     </div>
                 </div>
             </div>
             
-            <div class="d-grid gap-3">
-                <a href="hr/post_vacancy.php" class="btn btn-primary btn-lg">
-                    <i class="fas fa-plus-circle me-2"></i>Жаңа вакансия қосу
-                </a>
-                <a href="hr/my_vacancies.php" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-list me-2"></i>Менің вакансияларым
-                </a>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="hr/post_vacancy.php" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-plus-circle me-2"></i>Жаңа вакансия қосу
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="resumes.php" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-users me-2"></i>Резюмелерді қарау
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="hr/my_vacancies.php" class="btn btn-outline-primary btn-lg w-100">
+                        <i class="fas fa-list me-2"></i>Менің вакансияларым
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="hr/my_offers.php" class="btn btn-outline-primary btn-lg w-100">
+                        <i class="fas fa-envelope me-2"></i>Менің офферлерім
+                    </a>
+                </div>
             </div>
             
         <?php else: ?>
             <!-- Job Seeker Dashboard -->
             <div class="row mb-4 g-4">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="stat-card">
                         <i class="fas fa-paper-plane fa-3x text-primary mb-3"></i>
                         <h3><?= $my_applications_count ?></h3>
                         <p>Менің өтінімдерім</p>
-                        <a href="jobseeker/my_applications.php" class="btn btn-primary">
+                        <a href="jobseeker/my_applications.php" class="btn btn-primary btn-sm">
                             <i class="fas fa-eye me-2"></i>Қарау
                         </a>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="stat-card">
-                        <i class="fas fa-search fa-3x text-success mb-3"></i>
+                        <i class="fas fa-search fa-3x text-primary mb-3"></i>
                         <h3><?= $total_vacancies ?></h3>
-                        <p>Қолжетімді вакансиялар</p>
-                        <a href="jobseeker/browse_vacancies.php" class="btn btn-primary">
-                            <i class="fas fa-search me-2"></i>Жұмыс табу
+                        <p>Вакансиялар</p>
+                        <a href="jobseeker/browse_vacancies.php" class="btn btn-primary btn-sm">
+                            <i class="fas fa-search me-2"></i>Іздеу
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-file-alt fa-3x text-primary mb-3"></i>
+                        <h3><?= $my_resumes_count ?></h3>
+                        <p>Менің резюмелерім</p>
+                        <a href="jobseeker/my_resumes.php" class="btn btn-primary btn-sm">
+                            <i class="fas fa-folder me-2"></i>Қарау
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card">
+                        <i class="fas fa-envelope fa-3x text-primary mb-3"></i>
+                        <h3><?= $my_offers_count ?></h3>
+                        <p>Офферлер</p>
+                        <a href="jobseeker/my_resumes.php" class="btn btn-primary btn-sm">
+                            <i class="fas fa-envelope me-2"></i>Қарау
                         </a>
                     </div>
                 </div>
             </div>
             
-            <div class="d-grid gap-3">
-                <a href="jobseeker/browse_vacancies.php" class="btn btn-primary btn-lg">
-                    <i class="fas fa-search me-2"></i>Вакансияларды іздеу
-                </a>
-                <a href="jobseeker/my_applications.php" class="btn btn-outline-primary btn-lg">
-                    <i class="fas fa-file-alt me-2"></i>Менің өтінімдерім
-                </a>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="jobseeker/post_resume.php" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-plus-circle me-2"></i>Резюме жариялау
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="jobseeker/browse_vacancies.php" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-search me-2"></i>Вакансияларды іздеу
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="jobseeker/my_resumes.php" class="btn btn-outline-primary btn-lg w-100">
+                        <i class="fas fa-folder me-2"></i>Менің резюмелерім
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="jobseeker/my_applications.php" class="btn btn-outline-primary btn-lg w-100">
+                        <i class="fas fa-file-alt me-2"></i>Менің өтінімдерім
+                    </a>
+                </div>
             </div>
         <?php endif; ?>
     </div>
