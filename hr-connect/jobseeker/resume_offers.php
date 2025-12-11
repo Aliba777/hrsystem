@@ -124,6 +124,18 @@ $statusTexts = [
                                         <i class="fas fa-times me-1"></i>Қабылдамау
                                     </button>
                                 </div>
+                            <?php elseif ($offer['status'] == 'accepted'): ?>
+                                <?php
+                                // Получаем ID беседы
+                                $conv_check = $pdo->prepare("SELECT id FROM conversations WHERE offer_id = ?");
+                                $conv_check->execute([$offer['id']]);
+                                $conversation = $conv_check->fetch();
+                                ?>
+                                <?php if ($conversation): ?>
+                                    <a href="../chat.php?id=<?= $conversation['id'] ?>" class="btn btn-primary w-100">
+                                        <i class="fas fa-comments me-1"></i>Чатқа өту
+                                    </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                         </div>
                     </div>

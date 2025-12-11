@@ -47,6 +47,19 @@ body {
     font-size: 1.5rem;
 }
 
+.navbar .nav-link {
+    white-space: nowrap;
+}
+
+.navbar .badge {
+    font-size: 0.7rem;
+    min-width: 20px;
+    height: 20px;
+    padding: 0.25rem 0.4rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
 /* Герой секция */
 .hero-section {
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%234361ee"><path d="M0 0h1000v100L0 0z"/></svg>') bottom/100% 100px no-repeat, linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);

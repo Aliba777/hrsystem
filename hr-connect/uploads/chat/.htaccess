@@ -1,0 +1,8 @@
+# Запрещаем прямой доступ к файлам
+Options -Indexes
+
+# Разрешаем только определенные типы файлов
+<FilesMatch "\.(pdf|doc|docx|jpg|jpeg|png|txt)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

@@ -134,6 +134,17 @@ $statusTexts = [
 
                             <div class="d-grid gap-2 mt-3">
                                 <?php if ($offer['status'] == 'accepted'): ?>
+                                    <?php
+                                    // Получаем ID беседы
+                                    $conv_check = $pdo->prepare("SELECT id FROM conversations WHERE offer_id = ?");
+                                    $conv_check->execute([$offer['id']]);
+                                    $conversation = $conv_check->fetch();
+                                    ?>
+                                    <?php if ($conversation): ?>
+                                        <a href="../chat.php?id=<?= $conversation['id'] ?>" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-comments me-1"></i>Чатқа өту
+                                        </a>
+                                    <?php endif; ?>
                                     <button onclick="deleteOffer(<?= $offer['id'] ?>)" class="btn btn-outline-warning btn-sm">
                                         <i class="fas fa-undo me-1"></i>Офферді қайтарып алу
                                     </button>

@@ -30,7 +30,25 @@ try {
     $update = $pdo->prepare("UPDATE offers SET status = ? WHERE id = ?");
     $update->execute([$status, $offer_id]);
     
-    $message = $status === 'accepted' ? 'Оффер қабылданды!' : 'Оффер қабылданбады!';
+    // Если оффер принят, создаем беседу (если еще не создана)
+    if ($status === 'accepted') {
+        // Получаем данные оффера
+        $offer_data = $pdo->prepare("SELECT * FROM offers WHERE id = ?");
+        $offer_data->execute([$offer_id]);
+        $offer = $offer_data->fetch();
+        
+        // Проверяем, существует ли уже беседа
+        $check_conv = $pdo->prepare("SELECT id FROM conversations WHERE offer_id = ?");
+        $check_conv->execute([$offer_id]);
+        
+        if (!$check_conv->fetch()) {
+            // Создаем новую беседу
+            $create_conv = $pdo->prepare("INSERT INTO conversations (offer_id, hr_id, jobseeker_id) VALUES (?, ?, ?)");
+            $create_conv->execute([$offer_id, $offer['hr_id'], $offer['job_seeker_id']]);
+        }
+    }
+    
+    $message = $status === 'accepted' ? 'Оффер қабылданды! Енді HR-мен чатта байланыса аласыз.' : 'Оффер қабылданбады!';
     
     echo json_encode(['success' => true, 'message' => $message]);
     

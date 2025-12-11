@@ -33,6 +33,12 @@ $prefix = (strpos($_SERVER['SCRIPT_NAME'], '/jobseeker/') !== false ||
                         <a class="nav-link" href="<?= $prefix ?>jobseeker/my_applications.php"><i class="fas fa-paper-plane me-2"></i>Өтінімдерім</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link position-relative" href="<?= $prefix ?>messages.php">
+                            <i class="fas fa-comments me-2"></i>Хабарламалар
+                            <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" id="unreadBadge" style="display: none;">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="<?= $prefix ?>profile.php"><i class="fas fa-user me-2"></i>Профиль</a>
                     </li>
                 <?php elseif (isset($_SESSION['user_type']) && $_SESSION['user_type'] == 'hr'): ?>
@@ -41,6 +47,12 @@ $prefix = (strpos($_SERVER['SCRIPT_NAME'], '/jobseeker/') !== false ||
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $prefix ?>hr/my_offers.php"><i class="fas fa-envelope me-2"></i>Менің офферлерім</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link position-relative" href="<?= $prefix ?>messages.php">
+                            <i class="fas fa-comments me-2"></i>Хабарламалар
+                            <span class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle" id="unreadBadge" style="display: none;">0</span>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= $prefix ?>profile.php"><i class="fas fa-user me-2"></i>Профиль</a>
@@ -57,3 +69,34 @@ $prefix = (strpos($_SERVER['SCRIPT_NAME'], '/jobseeker/') !== false ||
         </div>
     </div>
 </nav>
+
+<?php if (isset($_SESSION['user_id'])): ?>
+<script>
+// Обновление счетчика непрочитанных сообщений
+async function updateUnreadCount() {
+    try {
+        const response = await fetch('<?= $prefix ?>ajax/get_unread_count.php');
+        const data = await response.json();
+        
+        if (data.success && data.count > 0) {
+            const badge = document.getElementById('unreadBadge');
+            if (badge) {
+                badge.textContent = data.count;
+                badge.style.display = 'inline-block';
+            }
+        } else {
+            const badge = document.getElementById('unreadBadge');
+            if (badge) {
+                badge.style.display = 'none';
+            }
+        }
+    } catch (error) {
+        console.error('Error updating unread count:', error);
+    }
+}
+
+// Обновляем счетчик при загрузке и каждые 10 секунд
+updateUnreadCount();
+setInterval(updateUnreadCount, 10000);
+</script>
+<?php endif; ?>
