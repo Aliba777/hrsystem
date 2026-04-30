@@ -1,0 +1,31 @@
+# Alertmanager Configuration for HR Connect
+# Routes alerts to Telegram bot
+
+global:
+  resolve_timeout: 5m
+
+# Route configuration
+route:
+  group_by: ['alertname', 'severity']
+  group_wait: 30s          # Wait 30s before sending first notification
+  group_interval: 5m       # Wait 5m before sending grouped notifications
+  repeat_interval: 4h      # Wait 4h before repeating notifications
+  receiver: 'telegram'
+
+# Receivers configuration
+receivers:
+  - name: 'telegram'
+    webhook_configs:
+      - url: 'http://web:80/alertmanager_webhook.php'
+        send_resolved: true
+        http_config:
+          follow_redirects: true
+
+# Inhibition rules (prevent notification spam)
+inhibit_rules:
+  # Inhibit warning alerts if critical alert is firing
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'instance']
