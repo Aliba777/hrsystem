@@ -1,0 +1,16 @@
+# Grafana Dashboard Provisioning
+# Automatically loads dashboards from directory
+
+apiVersion: 1
+
+providers:
+  - name: 'HR Connect Monitoring'
+    orgId: 1
+    folder: 'System Metrics'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: false

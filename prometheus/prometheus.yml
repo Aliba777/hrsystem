@@ -1,0 +1,40 @@
+# Prometheus Configuration for HR Connect Monitoring
+# Scrapes metrics every 15 seconds from Node Exporter
+
+global:
+  scrape_interval: 15s       # Scrape targets every 15 seconds
+  evaluation_interval: 15s   # Evaluate alert rules every 15 seconds
+  external_labels:
+    cluster: 'hr-connect'
+    environment: 'production'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# Load alert rules
+rule_files:
+  - /etc/prometheus/alerts.yml
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node Exporter - system metrics
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          instance: 'hr-connect-server'
+
+  # Docker containers monitoring (optional)
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['host.docker.internal:9323']
+    metrics_path: /metrics
