@@ -1,0 +1,6 @@
+# HR Connect Cron Jobs
+# 
+# Database Backup - Daily at 02:00 AM
+0 2 * * * root /var/www/html/scripts/backup_database.sh >> /var/log/hr_connect_backup.log 2>&1
+
+# Empty line required at end of crontab file

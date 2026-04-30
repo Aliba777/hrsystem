@@ -1,0 +1,48 @@
+<?php
+$current_dir = dirname($_SERVER['PHP_SELF']);
+$base_path = '';
+
+if (strpos($current_dir, '/hr') !== false || strpos($current_dir, '/jobseeker') !== false) {
+    $base_path = '../';
+}
+?>
+
+<footer id="contacts">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>HR Connect</h3>
+                <p>Жұмыс пен персоналды іздеуге арналған сенімді платформа. Біз сіздің мансабыңызды дамытуға көмектесеміз.</p>
+
+            </div>
+            
+            <div class="footer-section">
+                <h4>Пайдаланушылар үшін</h4>
+                <a href="<?= $base_path ?>jobseeker/browse_vacancies.php">Жұмыс іздеушілер</a>
+                <a href="<?= $base_path ?>hr/post_vacancy.php">Жұмыс берушілер</a>
+                <a href="<?= $base_path ?>profile.php">Профиль</a>
+                <a href="<?= $base_path ?>register.php">Тіркелу</a>
+                <a href="<?= $base_path ?>login.php">Кіру</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Компания</h4>
+                <a href="<?= $base_path ?>index.php#features">Біз туралы</a>
+                <a href="<?= $base_path ?>index.php#how-it-works">Қалай жұмыс істейді</a>
+                <a href="#">Кепілдіктер</a>
+                <a href="#">Жиі қойылатын сұрақтар</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Байланыс</h4>
+                <p>📧 info@hrconnect.kz</p>
+                <p>📞 +7 (708) 204-10-93</p>
+                <p>📍 Астана, Пушкина 11</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <?= date('Y') ?> HR Connect. Барлық құқықтар қорғалған</p>
+        </div>
+    </div>
+</footer>

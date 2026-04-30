@@ -1,0 +1,32 @@
+# Example Terraform variables file for HR Connect
+# 
+# Instructions:
+# 1. Copy this file to terraform.tfvars:
+#    cp terraform.tfvars.example terraform.tfvars
+# 
+# 2. Fill in your actual values
+# 
+# 3. Never commit terraform.tfvars to version control!
+
+# DigitalOcean API token
+# Get from: https://cloud.digitalocean.com/account/api/tokens
+do_token = "your_digitalocean_api_token_here"
+
+# Environment name
+environment_name = "production"
+
+# Region (available regions: nyc1, nyc3, sfo3, fra1, lon1, sgp1, ams3, tor1)
+region = "fra1"
+
+# Instance type (droplet size)
+# Options:
+#   s-1vcpu-1gb    - 1 vCPU, 1GB RAM, 25GB SSD ($6/month)
+#   s-1vcpu-2gb    - 1 vCPU, 2GB RAM, 50GB SSD ($12/month)
+#   s-2vcpu-2gb    - 2 vCPU, 2GB RAM, 60GB SSD ($18/month)
+#   s-2vcpu-4gb    - 2 vCPU, 4GB RAM, 80GB SSD ($24/month) [RECOMMENDED]
+#   s-4vcpu-8gb    - 4 vCPU, 8GB RAM, 160GB SSD ($48/month)
+instance_type = "s-2vcpu-4gb"
+
+# SSH key name (must exist in your DigitalOcean account)
+# Upload your SSH key first at: https://cloud.digitalocean.com/account/security
+ssh_key_name = "your_ssh_key_name"

@@ -1,0 +1,13 @@
+- name: Run my Docker project
+  hosts: local
+
+  tasks:
+    - name: Stop old container
+      command: docker rm -f myapp_container
+      ignore_errors: yes
+
+    - name: Build Docker image
+      command: docker build -t myapp ../
+
+    - name: Run container
+      command: docker run -d -p 8080:80 --name myapp_container myapp

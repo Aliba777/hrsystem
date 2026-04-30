@@ -1,0 +1,9 @@
+# Разрешаем доступ к изображениям
+<FilesMatch "\.(jpg|jpeg|png|gif|webp)$">
+    Allow from all
+</FilesMatch>
+
+# Запрещаем выполнение PHP
+<FilesMatch "\.php$">
+    Deny from all
+</FilesMatch>

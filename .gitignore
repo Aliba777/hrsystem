@@ -1,0 +1,38 @@
+# Environment variables
+.env
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/*.tfvars
+terraform/crash.log
+
+# Logs
+*.log
+
+# Backups
+/var/backups/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PHP
+vendor/
+composer.lock
+
+# Node
+node_modules/
+package-lock.json
+
+# Uploads
+uploads/*
+!uploads/.htaccess
+*.deb
+*.deb
+*.deb
