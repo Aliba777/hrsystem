@@ -14,7 +14,7 @@
 ![Ansible](https://img.shields.io/badge/Ansible-automation-EE0000?style=flat-square&logo=ansible&logoColor=white)
 ![Telegram](https://img.shields.io/badge/Telegram-alerts-26A5E4?style=flat-square&logo=telegram&logoColor=white)
 
-Платформа для жұмыс іздеушілер мен HR менеджерлерін байланыстыруға арналған / Платформа для соискателей и HR-менеджеров
+Платформа для соискателей и HR-менеджеров
 
 </div>
 
